@@ -1,0 +1,17 @@
+{
+  "network": "livenet",
+  "port": 3001,
+  "services": [
+    "dashd",
+    "web",
+    "@dashevo/insight-api"
+  ],
+  "servicesConfig": {
+    "dashd": {
+      "spawn": {
+        "datadir": "./data",
+        "exec": "/Users/jlmconsulting/.nvm/versions/node/v13.8.0/lib/node_modules/@dashevo/dashcore-node/lib/scaffold/data/dashd"
+      }
+    }
+  }
+}

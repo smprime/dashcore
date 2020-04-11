@@ -1,6 +1,6 @@
 {
   "name": "dashcore",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "node ./server.js",
@@ -12,20 +12,22 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "~0.900.3",
-    "@angular/cli": "~9.0.3",
-    "@angular/compiler-cli": "~9.0.2",
     "@angular/animations": "~9.0.2",
+    "@angular/cli": "~9.0.3",
     "@angular/common": "~9.0.2",
     "@angular/compiler": "~9.0.2",
+    "@angular/compiler-cli": "~9.0.2",
     "@angular/core": "~9.0.2",
     "@angular/forms": "~9.0.2",
+    "@angular/http": "^7.2.16",
     "@angular/platform-browser": "~9.0.2",
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
+    "ng-qrcode": "^3.1.0",
     "ng-zorro-antd": "^8.5.2",
     "rxjs": "~6.5.4",
-    "tslib": "^1.10.0",
     "ts-node": "~8.3.0",
+    "tslib": "^1.10.0",
     "typescript": "~3.7.5",
     "zone.js": "~0.10.2"
   },
@@ -45,5 +47,25 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
     "tslint": "~5.18.0"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smprime/dashcore.git"
+  },
+  "keywords": [
+    "Dash",
+    "Ant",
+    "Design",
+    "Angular",
+    "Boiler",
+    "Plate"
+  ],
+  "author": "Jason Mullings",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smprime/dashcore/issues"
+  },
+  "homepage": "https://github.com/smprime/dashcore#readme"
 }

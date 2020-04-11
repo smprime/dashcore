@@ -1,0 +1,36 @@
+<nz-steps>
+  <nz-step nzTitle="Create Address" [nzStatus]="process.home.state" [nzIcon]="process.home.icon"></nz-step>
+  <nz-step nzTitle="Verify Balance" [nzStatus]="process.address.state" [nzIcon]="process.address.icon"></nz-step>
+  <nz-step nzTitle="Pay" [nzStatus]="process.qrcode.state" [nzIcon]="process.qrcode.icon"></nz-step>
+  <nz-step nzTitle="Done" [nzStatus]="process.iconTemplate.state" [nzIcon]="process.iconTemplate.icon"></nz-step>
+  <ng-template #iconTemplate><i nz-icon nzType="smile"></i></ng-template>
+</nz-steps>
+<br />
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+  <input type="text" nz-input placeholder="Get Dash Address" [value]="walletwif" />
+</nz-input-group>
+<ng-template #suffixButton>
+  <button nz-button (click)="createwif()" nzType="primary" nzSize="large" nzGhost>Create</button>
+</ng-template>
+<br />
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton2">
+  <input type="text" nz-input placeholder="Get Dash Balance" [value]="walletBalance" />
+</nz-input-group>
+<ng-template #suffixButton2>
+  <button nz-button (click)="gettestnetbalance()" nzType="primary" nzSize="large" nzGhost>Balance</button>
+</ng-template>
+<br />
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton3">
+  <input type="text" nz-input placeholder="Get Dash QR-Code" [value]="" />
+</nz-input-group>
+<ng-template #suffixButton3>
+  <button nz-button (click)="createQR()" nzType="primary" nzSize="large" nzGhost>QR-Code</button>
+</ng-template>
+
+<nz-modal [(nzVisible)]="showQR" nzTitle="Dash Wallet and Balance" (nzOnCancel)="createQR()">
+  <qr-code [value]="walletwif" size="450" errorCorrectionLevel="M"></qr-code>
+  <div *nzModalFooter>
+    <span>Dash Coins: {{walletBalance}} </span>
+    <button nz-button nzType="primary" (click)="createQR()" [nzLoading]="false">OK!</button>
+  </div>
+</nz-modal>
