@@ -67,5 +67,10 @@
   "bugs": {
     "url": "https://github.com/smprime/dashcore/issues"
   },
-  "homepage": "https://github.com/smprime/dashcore#readme"
+  "homepage": "https://github.com/smprime/dashcore#readme",
+  "engineStrict": true,
+  "engines": {
+    "node": "13.8.0",
+    "npm": "6.13.6"
+  }
 }

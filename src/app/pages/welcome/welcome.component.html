@@ -3,14 +3,18 @@
   <nz-step nzTitle="Verify Balance" [nzStatus]="process.address.state" [nzIcon]="process.address.icon"></nz-step>
   <nz-step nzTitle="Pay" [nzStatus]="process.qrcode.state" [nzIcon]="process.qrcode.icon"></nz-step>
   <nz-step nzTitle="Done" [nzStatus]="process.iconTemplate.state" [nzIcon]="process.iconTemplate.icon"></nz-step>
-  <ng-template #iconTemplate><i nz-icon nzType="smile"></i></ng-template>
+  <ng-template #iconTemplate><i nz-icon nzType="Download"></i></ng-template>
 </nz-steps>
+<br />
+LiveNet:
+  <nz-switch nzSize="large"(click)="liveNet()"></nz-switch>
+<br />
 <br />
 <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
   <input type="text" nz-input placeholder="Get Dash Address" [value]="walletwif" />
 </nz-input-group>
 <ng-template #suffixButton>
-  <button nz-button (click)="createwif()" nzType="primary" nzSize="large" nzGhost>Create</button>
+  <button nz-button (click)="getAddress()" nzType="primary" nzSize="large" nzGhost>Create</button>
 </ng-template>
 <br />
 <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton2">
@@ -21,16 +25,30 @@
 </ng-template>
 <br />
 <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton3">
-  <input type="text" nz-input placeholder="Get Dash QR-Code" [value]="" />
+  <input type="text" nz-input placeholder="Get Dash QR-Code" [value]="walletaddress" />
 </nz-input-group>
 <ng-template #suffixButton3>
   <button nz-button (click)="createQR()" nzType="primary" nzSize="large" nzGhost>QR-Code</button>
 </ng-template>
 
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton4">
+  <input type="text" nz-input placeholder="Download Wallet File" [value]="fileID" />
+</nz-input-group>
+<ng-template #suffixButton4>
+  <button nz-button (click)="sendMessage()" nzType="primary" nzSize="large" nzGhost>Download</button>
+</ng-template>
+
+<!-- MODAL -->
 <nz-modal [(nzVisible)]="showQR" nzTitle="Dash Wallet and Balance" (nzOnCancel)="createQR()">
-  <qr-code [value]="walletwif" size="450" errorCorrectionLevel="M"></qr-code>
+  <qr-code [value]="walletaddress" size="450" errorCorrectionLevel="M"></qr-code>
   <div *nzModalFooter>
     <span>Dash Coins: {{walletBalance}} </span>
     <button nz-button nzType="primary" (click)="createQR()" [nzLoading]="false">OK!</button>
   </div>
 </nz-modal>
+
+<br />
+<nz-upload [nzCustomRequest]="customRequest" [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList"
+  (nzChange)="getFiles($event)" accept=".json">
+  <button nz-button><i nz-icon nzType="upload"></i><span>Upload</span></button>
+</nz-upload>
