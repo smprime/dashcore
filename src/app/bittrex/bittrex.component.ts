@@ -24,13 +24,21 @@ export class BittrexComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setLoop = setInterval(() => this.getPrice(), 10000);
   }
-  async getPrice() {
-  const response = await fetch('https://api.bittrex.com/api/v1.1/public/getticker?market=USDT-DASH', {
-      mode: 'no-cors',
-      method: 'GET',
+  getPrice() {
+    fetch('https://dashcore.herokuapp.com/bittrexapi?data=public/getticker?market=USDT-DASH', {
+      mode: 'cors',
       cache: 'no-cache',
     })
-    console.log({response})
+      .then(response => response.json())
+      .then(data => {
+        if(data){
+          const {result } = data.message
+          this.state = {
+            ...this.state,
+            priceUsd: result.Ask,
+          }
+        }
+      });
   }
   showNumber(amount, decimals) {
     let result;
