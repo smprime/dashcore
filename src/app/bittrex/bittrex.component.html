@@ -1,0 +1,14 @@
+<div>
+    <div title="Data from CoinMarketCap.com">
+        <b>1 DASH</b>
+        <br />${{showNumber(state.priceUsd, 2)}}
+        <br />
+    </div>
+        <div title="1 mDASH = 0.001 DASH. Data from CoinMarketCap.com">
+            <b>1 mDASH</b>
+            <br />${{showNumber(state.priceUsd / 1000.0, 2)}}
+            <br />
+            Tx:${{showNumber(state.priceUsd * 0.00000226, 5)}}
+        </div>
+
+</div>

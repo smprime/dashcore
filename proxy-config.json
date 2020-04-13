@@ -1,0 +1,7 @@
+{
+    "/v1.1": {
+    "target": "https://api.bittrex.com/api",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

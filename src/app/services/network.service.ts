@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { NzModalService } from 'ng-zorro-antd';
+import { HttpHeaders } from '@angular/common/http';
 
 declare var dashcore;
 
@@ -120,4 +121,22 @@ export class NetworkService {
       localStorage.setItem('sendtransactions', JSON.stringify(this.sendtransactions));
     }
   }
+
+  async getData(address: string){
+    // const request = await fetch(address);
+    // console.log({request})
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*')
+    // headers.append('Access-Control-Allow-Methods:', "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    return new Promise((resolve, reject) => {
+        this.http.get(address, { headers: headers }).subscribe(res => {
+          let data = res.json();
+          resolve(data);
+          
+        }, (err) => reject(err));
+      });
+    }
 }
