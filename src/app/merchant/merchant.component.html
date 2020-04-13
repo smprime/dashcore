@@ -1,0 +1,30 @@
+<!-- <crypttp type=''
+    merchant_id=''
+    country_currency=''
+    currency=''
+    amount=''
+    to=''
+    payload=''
+    memo=''
+    onsuccess=''
+    onerror=''></crypttp> -->
+    <nz-card nzHoverable style="width:100%" [nzCover]="coverTemplate">
+        <nz-card-meta nzTitle="Crypttp Merchant" nzDescription="www.crypttp.com">
+            <div class="crypttp-container-fixed-width" [style.max-width]="buttonWidth">
+               
+            </div>
+        </nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate>
+        <img alt="example" height="400px" src="../../assets/images/DashPay.png" />
+      </ng-template>
+      <button class="embed-one-click-crypttp-button" (click)="proceedCheckout()" [style.background]="finalButtonColor"
+      [style.color]="fontColor">
+      <img class="crypttp-logo-image-placeholder" src="{{image}}" />
+      {{finalButtonText}}
+  </button>
+  <div [style.display]="display_loader" class="crypttp-loader">
+      <svg viewBox="0 0 80 80">
+          <circle name="crypttp-loader" cx="40" cy="40" r="32"></circle>
+      </svg>
+  </div>
