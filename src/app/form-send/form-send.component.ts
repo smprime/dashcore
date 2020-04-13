@@ -144,8 +144,8 @@ export class FormSendComponent implements OnInit {
         utxo,
         fees,
         changeaddress,
-        privatekey: this.validateForm.controls['walletwif'].value,
-        toaddress: this.validateForm.controls['walletwif'].value,
+        privatekey: this.validateForm.controls['genAddress'].value,
+        toaddress: this.validateForm.controls['genAddress'].value,
         toamount: Number(this.validateForm.controls['amount'].value)
       }
       const tx = await this.networkService.createtransaction(payload);

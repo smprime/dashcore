@@ -91,14 +91,13 @@ export class NetworkService {
  async createtransaction(payload) {
     
     return await new dashcore.Transaction()
-    .verify(dashcore.PrivateKey.fromWIF(payload.privatekey))
-      // .from(payload.utxo)
-      // .to([{ address: payload.toaddress, satoshis: payload.toamount }])
-      // .fee(payload.fees)
-      // .change(payload.changeaddress)
-      // .sign(dashcore.PrivateKey.fromWIF(payload.privatekey))
-      // // .addData('Buffer')
-      // .toBuffer();
+      .from(payload.utxo)
+      .to([{ address: payload.toaddress, satoshis: payload.toamount }])
+      .fee(payload.fees)
+      .change(payload.changeaddress)
+      .sign(dashcore.PrivateKey.fromWIF(payload.privatekey))
+      // .addData('Buffer')
+      .toBuffer();
   }
   broadcast(rawtx) {
 
