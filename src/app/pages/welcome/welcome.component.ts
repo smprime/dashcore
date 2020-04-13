@@ -8,7 +8,24 @@ let netState = 'testnet' || 'mainnet'
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-  public process;
+  public process = {
+    home: {
+      state: 'wait',
+      icon: 'home'
+    },
+    address: {
+      state: 'wait',
+      icon: 'money-collect'
+    },
+    qrcode: {
+      state: 'wait',
+      icon: 'qrcode'
+    },
+    iconTemplate: {
+      state: 'wait',
+      icon: 'file-done'
+    },
+  }
   public modal: any;
   public revertible: any;
   public transacted: any;
@@ -29,7 +46,7 @@ export class WelcomeComponent implements OnInit {
   public showQR = false;
   public fileID: string = '';
   public fileList = [];
-  constructor(public networkService: NetworkService, private modalService: NzModalService) { }
+  constructor(public networkService: NetworkService) { }
 
   liveNet(){
     switch (netState) {
@@ -43,25 +60,6 @@ export class WelcomeComponent implements OnInit {
     console.log(netState)
   }
   ngOnInit(): void {
-
-    this.process = {
-      home: {
-        state: 'wait',
-        icon: 'home'
-      },
-      address: {
-        state: 'wait',
-        icon: 'money-collect'
-      },
-      qrcode: {
-        state: 'wait',
-        icon: 'qrcode'
-      },
-      iconTemplate: {
-        state: 'wait',
-        icon: 'file-done'
-      },
-    }
 
     this.transacted = {
       "txid": "",
@@ -94,34 +92,25 @@ export class WelcomeComponent implements OnInit {
 
   gettestnetbalance(): void {
     if(this.walletaddress){
-    this.loading('<img src="../assets/images/dash_gif.gif" width=250>');
     (!this.walletaddress) ?
-      this.loading(`${netState}: Address empty`) :
+    this.networkService.loading(`${netState}: Address empty`) :
       this.networkService.getBalance(this.walletaddress, netState).then((data: any) => {
         this.process.address.state = 'finished';
         this.walletData = data;
         (this.walletData != null) ?
-          this.walletBalance = this.walletData.balance : this.loading('Query failed');
-        this.modal.destroy()
+          this.walletBalance = this.walletData.balance : this.networkService.loading('Query failed');
+          this.networkService.modal.destroy()
       }, (err) => {
-        this.loading('Query failed')
+        this.networkService.loading('Query failed')
       });
     } else {
-      this.loading("Please Create a Wallet!!"); 
+      this.networkService.loading("Please Create a Wallet!!"); 
     }
-  }
-
-  loading(nzContent): void {
-
-    this.modal = this.modalService.info({
-      nzTitle: 'Loading Data...!!!',
-      nzContent
-    });
   }
 
   public createQR(): void {
     if (this.walletBalance === '') {
-      this.loading("Please request balance");
+      this.networkService.loading("Please request balance");
     } else {
       this.showQR = !this.showQR;
       this.process.qrcode.state = 'finished';
@@ -143,17 +132,17 @@ export class WelcomeComponent implements OnInit {
         alert(err)
       });
     } else {
-      this.loading("Please create a Wallet!!");
+      this.networkService.loading("Please create a Wallet!!");
     }
     
   }
 
   public getFiles(info: any) {
     if (info.file.status === 'uploading') {
-      this.loading('<img src="../assets/images/dash_gif.gif" width=250>');
+      this.networkService.loading('<img src="../assets/images/dash_gif.gif" width=250>');
     }
     if (info.file.status = 'done') {
-      this.modal.destroy();
+      this.networkService.modal.destroy();
     }
   }
 
@@ -167,14 +156,14 @@ export class WelcomeComponent implements OnInit {
         this.setFundAddress(JSON.parse(readFile.result.toString()))
       }
     } catch (e){
-      this.loading(e);
+      this.networkService.loading(e);
     }
     
   }
   beforeUpload = (file) => {
     const isLt512M = file.size / 1024 / 1024 < 512;
     if (!isLt512M) {
-      this.loading('File must smaller than 512 MB');
+      this.networkService.loading('File must smaller than 512 MB');
     }
     return isLt512M;
   }
@@ -186,11 +175,11 @@ export class WelcomeComponent implements OnInit {
       this.fileID = `file${ + new Date() }.json`;
       this.download(file, this.fileID);
     } else {
-      this.loading("Please create a Wallet!!");
+      this.networkService.loading("Please create a Wallet!!");
     }
   }
   async download(blob, filename) {
-    this.loading('<img src="../assets/images/dash_gif.gif" width=250>');
+    this.networkService.loading('<img src="../assets/images/dash_gif.gif" width=250>');
     if (window.navigator.msSaveOrOpenBlob) // IE10+
       await window.navigator.msSaveOrOpenBlob(blob, filename);
     else { // Others
@@ -206,6 +195,6 @@ export class WelcomeComponent implements OnInit {
       }, 0);
     }
     this.process.iconTemplate.state = 'finished';
-    this.modal.destroy();
+    this.networkService.modal.destroy();
   }
 }

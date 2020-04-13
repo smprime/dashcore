@@ -1,0 +1,112 @@
+<nz-steps>
+  <nz-step nzTitle="Load Wallet" [nzStatus]="process.home.state" [nzIcon]="process.home.icon"></nz-step>
+  <nz-step nzTitle="Verify Balance" [nzStatus]="process.address.state" [nzIcon]="process.address.icon"></nz-step>
+  <nz-step nzTitle="Generate Address" [nzStatus]="process.qrcode.state" [nzIcon]="process.qrcode.icon"></nz-step>
+  <nz-step nzTitle="Send" [nzStatus]="process.iconTemplate.state" [nzIcon]="process.iconTemplate.icon"></nz-step>
+  <ng-template #iconTemplate><i nz-icon nzType="Download"></i></ng-template>
+</nz-steps>
+<br />
+LiveNet:
+<nz-switch nzSize="large"></nz-switch>
+<br />
+<br />
+<div nz-row [nzGutter]="8">
+  <div nz-col [nzSpan]="12">
+    <nz-card nzHoverable style="width: auto" [nzCover]="coverTemplate">
+      <nz-card-meta nzTitle="Load Wallet" nzDescription="Upload wallet, created in Wallets tab!"></nz-card-meta>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="12">
+    <nz-card nzHoverable style="width: auto" [nzCover]="coverTemplate2">
+      <nz-card-meta nzTitle="Load Wallet" nzDescription="Upload wallet, created in Wallets tab!"></nz-card-meta>
+    </nz-card>
+  </div>
+</div>
+<ng-template #coverTemplate>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>From Address</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+        <input nz-input formControlName="walletwif" placeholder="Get Dash Address" />
+        <ng-template #userErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your username!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('duplicated')">
+            The username is redundant!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>Balance</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="balance" placeholder="Balance" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>To Address</nz-form-label>
+      <div>
+        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+          <input nz-input formControlName="genAddress" placeholder="Address" />
+        </nz-form-control>
+      </div>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>Send Amount</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="amount" placeholder="Amount" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" (click)="getbalance()">Load</button>
+        <button nz-button nzType="dashed" [disabled]="!validateForm.valid">Send</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #coverTemplate2>
+  <form nz-form [formGroup]="dataForm" (ngSubmit)="submitForm(dataForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>Receiving Addr'</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+        <input nz-input formControlName="genAddress" placeholder="GenerateAddress" />
+        <ng-template #userErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your username!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('duplicated')">
+            The username is redundant!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>Balance</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="balance" placeholder="Balance" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>To Address</nz-form-label>
+      <div>
+        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+          <input nz-input formControlName="genAddress" placeholder="Address" />
+        </nz-form-control>
+      </div>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="9" nzRequired>Send Amount</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="amount" placeholder="Amount" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" (click)="generateAddress()">Generate</button>
+        <button nz-button nzType="success" (click)="resetData($event)">Reset</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
